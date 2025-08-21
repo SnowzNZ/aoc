@@ -20,6 +20,18 @@ def is_safe_report(levels: list[int]) -> bool:
     return False
 
 
+def is_safe_with_dampener(levels: list[int]) -> bool:
+    if len(levels) <= 2:
+        return True
+
+    for i in range(len(levels)):
+        modified_levels = levels[:i] + levels[i + 1 :]
+        if is_safe_report(modified_levels):
+            return True
+
+    return False
+
+
 def part_1() -> int:
     safe_reports = 0
 
@@ -30,4 +42,15 @@ def part_1() -> int:
     return safe_reports
 
 
+def part_2() -> int:
+    safe_reports = 0
+
+    for report in reports:
+        if is_safe_report(report) or is_safe_with_dampener(report):
+            safe_reports += 1
+
+    return safe_reports
+
+
 print(part_1())
+print(part_2())
